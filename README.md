@@ -66,6 +66,7 @@ Features:
 Here are the languages, tools, and frameworks used for the project.
 * [Java](https://www.java.com/)
 * [JavaFX](https://openjfx.io/)
+* [Apache Maven](https://maven.apache.org/)
 * [XML](https://www.w3.org/XML/)
 * [CSS](https://www.w3.org/CSS/)
 
@@ -78,17 +79,21 @@ Few instructions on how to set up the configurations for this project.
 
 ### Installation
 
-1. Install the JavaFX SDK at [https://openjfx.io/](https://openjfx.io/)
-2. Clone the repo
+1. Install the Java JDK at [https://www.oracle.com/java/technologies/downloads/](https://www.oracle.com/java/technologies/downloads/)
+2. Install Apache Maven binaries
+3. ```
+   brew install mvn
+   ```
+4. Clone the repo
    ```
    git clone https://github.com/saadxan/AlgWiz.git
    ```
-3. Compile & Run
+5. Compile & Run inside AlgWiz directory
    ```
-   javac *.java
+   mvn compile
    ```
    ```
-   java Driver
+   mvn javafx:run
    ```
 
 
