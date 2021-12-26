@@ -5,7 +5,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/saadxan/AlgWiz/">
-    <img src="AlgWiz/logo.png" alt="Logo" width="200" height="200">
+    <img src="assets/logo.png" alt="Logo" width="200" height="200">
   </a>
   <p align="center">
     An visualizing application for various graph algorithms.
@@ -13,7 +13,7 @@
     <a href="https://github.com/saadxan/AlgWiz/README.md">
     <br />
     <br />
-    <a href="/demo.md">View Demo</a>
+    <a href="assets/demo.md">View Demo</a>
     ·
     <a href="https://github.com/saadxan/AlgWiz/issues">Report Bug</a>
     ·
@@ -50,7 +50,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="AlgWiz/sample-demo.png" alt="sample-demo" width="640" height="360">
+<img src="assets/sample-demo.png" alt="sample-demo" width="640" height="360">
 
 A versatile GUI application that allows users to construct custom weighted directed graphs and observe various visualized algorithms. 
 
