@@ -81,14 +81,14 @@ Few instructions on how to set up the configurations for this project.
 
 1. Install the Java JDK at [https://www.oracle.com/java/technologies/downloads/](https://www.oracle.com/java/technologies/downloads/)
 2. Install Apache Maven binaries
-3. ```
+   ```
    brew install mvn
    ```
-4. Clone the repo
+3. Clone the repo
    ```
    git clone https://github.com/saadxan/AlgWiz.git
    ```
-5. Compile & Run inside AlgWiz directory
+4. Compile & Run inside AlgWiz directory
    ```
    mvn compile
    ```
