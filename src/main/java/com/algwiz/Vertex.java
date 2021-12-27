@@ -14,8 +14,8 @@ public class Vertex extends StackPane implements Comparable<Vertex> {
     double x;
     double y;
     SimpleIntegerProperty index;
-    private Circle circle;
-    private Set<Integer> incomingEdges;
+    private final Circle circle;
+    private final Set<Integer> incomingEdges;
 
     public Vertex(double[] coordinates, int indexValue) {
         index = new SimpleIntegerProperty(indexValue);

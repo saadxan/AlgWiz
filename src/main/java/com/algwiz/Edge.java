@@ -13,7 +13,7 @@ public class Edge extends Pane {
     Vertex origin, destination;
     private TextField weightField;
     private Line line;
-    private Polygon arrowHead;
+    private final Polygon arrowHead;
 
     public Edge(Vertex originVertex) {
         setPickOnBounds(false);
@@ -47,12 +47,11 @@ public class Edge extends Pane {
 
         weightField = new TextField();
         weightField.setStyle("-fx-background-color: rgba(0,0,0,0); -fx-text-fill: white;");
-        weightField.setAlignment(Pos.CENTER);
-
         weightField.setPickOnBounds(true);
+        weightField.setFocusTraversable(true);
         weightField.setMaxWidth(45);
         weightField.setMaxHeight(15);
-        weightField.setFocusTraversable(true);
+        weightField.setAlignment(Pos.CENTER);
         weightField.textProperty().addListener((observableValue, s, t1) -> {
             if (!t1.matches("\\d*"))
                 weightField.setText(t1.replaceAll("[^\\d]", ""));

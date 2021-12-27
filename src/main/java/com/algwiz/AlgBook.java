@@ -32,16 +32,13 @@ public final class AlgBook {
         while (queue.size() != 0) {
             u = queue.poll();
 
-            Iterator<Edge> itr = vertices.get(u).iterator();
-
-            while (itr.hasNext()) {
-                Edge e = itr.next();
+            for (Edge e : vertices.get(u)) {
                 Vertex v = e.destination;
 
                 seqAnimation.getChildren().add(edgeStroke(e));
 
-                if (!visited[v.index.get()-1]) {
-                    visited[v.index.get()-1] = true;
+                if (!visited[v.index.get() - 1]) {
+                    visited[v.index.get() - 1] = true;
                     queue.add(v);
                     seqAnimation.getChildren().add(vertexFill(v));
                 }
@@ -198,6 +195,10 @@ public final class AlgBook {
         seqAnimation.setOnFinished(actionEvent -> Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Would you like to replay animation?", ButtonType.YES, ButtonType.NO);
             Optional<ButtonType> choice = alert.showAndWait();
+
+            if (choice.isEmpty()) {
+                return;
+            }
 
             if (choice.get() == ButtonType.YES)
                 seqAnimation.play();
