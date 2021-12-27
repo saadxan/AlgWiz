@@ -1,13 +1,13 @@
 package com.algwiz;
 
-import javafx.beans.binding.DoubleBinding;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.*;
+import javafx.scene.layout.Region;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 
-public class Edge extends StackPane {
+public class Edge extends Region {
 
     int weight;
     Vertex origin, destination;
@@ -20,26 +20,19 @@ public class Edge extends StackPane {
         setUpEdgeLine();
 
         origin = originVertex;
-        line.setStartX(originVertex.x);
-        line.setStartY(originVertex.y);
 
+        line.startXProperty().bind(origin.centerXProperty());
+        line.startYProperty().bind(origin.centerYProperty());
         line.setEndX(originVertex.x);
         line.setEndY(originVertex.y);
-
-        setWidth(0);
-        setHeight(line.getStrokeWidth());
-        setLayoutX((line.getStartX()));
-        setLayoutY((line.getStartY()));
 
         arrowHead = new Polygon();
         arrowHead.getPoints().addAll(0.0, 0.0,
                 0.0, 25.0,
                 40.0, 12.5);
         arrowHead.setStyle("-fx-fill: tomato; -fx-opacity: 100.0; -fx-stroke: black; -fx-stroke-width: 1px;");
-        getChildren().addAll(line, arrowHead, weightField);
 
-        layoutXProperty().bind(line.startXProperty());
-        layoutYProperty().bind(line.startYProperty());
+        getChildren().addAll(line);
     }
 
     public void setUpEdgeLine() {
@@ -47,11 +40,11 @@ public class Edge extends StackPane {
         line.setStyle("-fx-stroke: darkgray; -fx-stroke-width: 1px; -fx-stroke-type: centered; -fx-stroke-line-join: miter; -fx-stroke-dash-offset: 0.0;");
 
         weightField = new TextField();
-        weightField.setStyle("-fx-background-color: rgba(0,0,0,0); -fx-text-fill: white;");
+        weightField.setStyle("-fx-fill: blue; -fx-background-color: rgba(0,0,0,1); -fx-text-fill: white;");
         weightField.setAlignment(Pos.CENTER);
         weightField.setMaxWidth(45);
         weightField.setMaxHeight(15);
-        weightField.setFocusTraversable(false);
+        weightField.setFocusTraversable(true);
         weightField.textProperty().addListener((observableValue, s, t1) -> {
             if (!t1.matches("\\d*"))
                 weightField.setText(t1.replaceAll("[^\\d]", ""));
@@ -63,7 +56,7 @@ public class Edge extends StackPane {
                 if (weightField.getText().isBlank())
                     weightField.setText("0");
                 weight = Integer.parseInt(weightField.getText());
-                this.requestFocus();
+                weightField.requestFocus();
             }
         });
     }
@@ -73,39 +66,8 @@ public class Edge extends StackPane {
     }
 
     public void setEndXY(double x, double y) {
-        if (x < line.getStartX()) {
-            layoutXProperty().bind(line.endXProperty());
-            if (Math.abs(getLineTravelAngle()) > 84.0 && Math.abs(getLineTravelAngle()) < 98.0) {
-                DoubleBinding r = widthProperty().divide(2);
-                layoutXProperty().bind(line.endXProperty().subtract(r));
-            }
-        } else {
-            layoutXProperty().bind(line.startXProperty());
-            if (Math.abs(getLineTravelAngle()) > 84.0 && Math.abs(getLineTravelAngle()) < 98.0) {
-                DoubleBinding r = widthProperty().divide(2);
-                layoutXProperty().bind(line.startXProperty().subtract(r));
-            }
-        }
-        
         line.setEndX(x);
-        arrowHead.setRotate(getLineTravelAngle());
-
-        if (y < line.getStartY()) {
-            layoutYProperty().bind(line.endYProperty());
-            if (getLineTravelAngle() > -2 && getLineTravelAngle() < 4) {
-                DoubleBinding r = heightProperty().divide(2);
-                layoutYProperty().bind(line.endYProperty().subtract(r));
-            }
-        } else {
-            layoutYProperty().bind(line.startYProperty());
-            if (Math.abs(getLineTravelAngle()) > 174 && Math.abs(getLineTravelAngle()) < 180) {
-                DoubleBinding r = heightProperty().divide(2);
-                layoutYProperty().bind(line.startYProperty().subtract(r));
-            }
-        }
-
         line.setEndY(y);
-        arrowHead.setRotate(getLineTravelAngle());
     }
 
     public void setDestination(Vertex destination) {
@@ -115,12 +77,17 @@ public class Edge extends StackPane {
     public void connectEdge(Vertex targetVertex) {
         setDestination(targetVertex);
 
-        double[] originMidPoint = origin.getMidPoint();
-        double[] destinationMidPoint = destination.getMidPoint();
-        line.setStartX(originMidPoint[0]);
-        line.setStartY(originMidPoint[1]);
-        line.setEndX(destinationMidPoint[0]);
-        line.setEndY(destinationMidPoint[1]);
+        line.setEndX(destination.getMidPoint()[0]);
+        line.setEndY(destination.getMidPoint()[1]);
+
+        arrowHead.setRotate(getLineTravelAngle());
+        arrowHead.layoutXProperty().bind(((origin.centerXProperty().add(destination.centerXProperty())).divide(2)).subtract(20));
+        arrowHead.layoutYProperty().bind(((origin.centerYProperty().add(destination.centerYProperty())).divide(2)).subtract(12.5));
+
+        weightField.layoutXProperty().bind(arrowHead.layoutXProperty());
+        weightField.layoutYProperty().bind(arrowHead.layoutYProperty());
+
+        getChildren().addAll(arrowHead, weightField);
     }
 
     public Line getLine() {
