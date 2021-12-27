@@ -14,7 +14,6 @@ public class Edge extends Pane {
     private TextField weightField;
     private Line line;
     private Polygon arrowHead;
-    public boolean isCopy = false;
 
     public Edge(Vertex originVertex) {
         setPickOnBounds(false);
