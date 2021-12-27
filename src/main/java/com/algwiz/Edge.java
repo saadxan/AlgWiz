@@ -3,11 +3,11 @@ package com.algwiz;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 
-public class Edge extends Region {
+public class Edge extends Pane {
 
     int weight;
     Vertex origin, destination;
@@ -17,6 +17,7 @@ public class Edge extends Region {
     public boolean isCopy = false;
 
     public Edge(Vertex originVertex) {
+        setPickOnBounds(false);
         setUpEdgeLine();
 
         origin = originVertex;
@@ -32,7 +33,13 @@ public class Edge extends Region {
                 40.0, 12.5);
         arrowHead.setStyle("-fx-fill: tomato; -fx-opacity: 100.0; -fx-stroke: black; -fx-stroke-width: 1px;");
 
-        getChildren().addAll(line);
+        arrowHead.layoutXProperty().bind(((origin.centerXProperty().add(line.endXProperty())).divide(2)).subtract(20));
+        arrowHead.layoutYProperty().bind(((origin.centerYProperty().add(line.endYProperty())).divide(2)).subtract(12.5));
+
+        weightField.layoutXProperty().bind(arrowHead.layoutXProperty());
+        weightField.layoutYProperty().bind(arrowHead.layoutYProperty());
+
+        getChildren().addAll(line, arrowHead, weightField);
     }
 
     public void setUpEdgeLine() {
@@ -40,8 +47,10 @@ public class Edge extends Region {
         line.setStyle("-fx-stroke: darkgray; -fx-stroke-width: 1px; -fx-stroke-type: centered; -fx-stroke-line-join: miter; -fx-stroke-dash-offset: 0.0;");
 
         weightField = new TextField();
-        weightField.setStyle("-fx-fill: blue; -fx-background-color: rgba(0,0,0,1); -fx-text-fill: white;");
+        weightField.setStyle("-fx-background-color: rgba(0,0,0,0); -fx-text-fill: white;");
         weightField.setAlignment(Pos.CENTER);
+
+        weightField.setPickOnBounds(true);
         weightField.setMaxWidth(45);
         weightField.setMaxHeight(15);
         weightField.setFocusTraversable(true);
@@ -56,7 +65,7 @@ public class Edge extends Region {
                 if (weightField.getText().isBlank())
                     weightField.setText("0");
                 weight = Integer.parseInt(weightField.getText());
-                weightField.requestFocus();
+                this.requestFocus();
             }
         });
     }
@@ -68,6 +77,8 @@ public class Edge extends Region {
     public void setEndXY(double x, double y) {
         line.setEndX(x);
         line.setEndY(y);
+
+        arrowHead.setRotate(getLineTravelAngle());
     }
 
     public void setDestination(Vertex destination) {
@@ -79,15 +90,6 @@ public class Edge extends Region {
 
         line.setEndX(destination.getMidPoint()[0]);
         line.setEndY(destination.getMidPoint()[1]);
-
-        arrowHead.setRotate(getLineTravelAngle());
-        arrowHead.layoutXProperty().bind(((origin.centerXProperty().add(destination.centerXProperty())).divide(2)).subtract(20));
-        arrowHead.layoutYProperty().bind(((origin.centerYProperty().add(destination.centerYProperty())).divide(2)).subtract(12.5));
-
-        weightField.layoutXProperty().bind(arrowHead.layoutXProperty());
-        weightField.layoutYProperty().bind(arrowHead.layoutYProperty());
-
-        getChildren().addAll(arrowHead, weightField);
     }
 
     public Line getLine() {
