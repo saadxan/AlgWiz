@@ -14,6 +14,7 @@ import java.util.*;
  * It is positioned at ps as default
  * Vertex has a radius r
  * (ps + r, ps + r)
+ *
  * Use dimensions above for left & top corner Vertex translations
  * (xw - (ps + r), yh - (ps + r))
  * Use dimensions above for right & bottom corner Vertex translations
