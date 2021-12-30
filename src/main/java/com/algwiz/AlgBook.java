@@ -21,7 +21,8 @@ public final class AlgBook {
     static SequentialTransition seqAnimation;
 
     public static void BFS(ObservableMap<Vertex, ObservableSet<Edge>> vertices, Vertex u) {
-        visited = new boolean[vertices.size()];
+        int max = Collections.max(vertices.keySet()).index.get();
+        visited = new boolean[max];
         queue = new LinkedList<>();
         seqAnimation = new SequentialTransition();
 
@@ -49,7 +50,8 @@ public final class AlgBook {
     }
 
     public static void DFS(ObservableMap<Vertex, ObservableSet<Edge>> vertices, Vertex u) {
-        visited = new boolean[vertices.size()];
+        int max = Collections.max(vertices.keySet()).index.get();
+        visited = new boolean[max];
         stack = new Stack<>();
         seqAnimation = new SequentialTransition();
 
@@ -74,9 +76,10 @@ public final class AlgBook {
     }
 
     public static void dijkstra(ObservableMap<Vertex, ObservableSet<Edge>> vertices, Vertex s, Vertex d) {
+        int max = Collections.max(vertices.keySet()).index.get();
         queue =  new LinkedList<>();
-        previous = new int[vertices.size()];
-        distance = new int[vertices.size()];
+        previous = new int[max];
+        distance = new int[max];
         seqAnimation = new SequentialTransition();
         Stack<Integer> path = minCostPath(vertices, s, d);
 
@@ -121,11 +124,13 @@ public final class AlgBook {
     }
 
     private static Stack<Integer> minCostPath(ObservableMap<Vertex, ObservableSet<Edge>> vertices, Vertex s, Vertex d) {
+        int max = Collections.max(vertices.keySet()).index.get();
         queue =  new LinkedList<>();
-        previous = new int[vertices.size()];
-        distance = new int[vertices.size()];
+        previous = new int[max];
+        distance = new int[max];
         seqAnimation = new SequentialTransition();
 
+        System.out.println(vertices.keySet() + " with size " + vertices.size());
         for (Vertex v : vertices.keySet()) {
             previous[v.index.get()-1] = v.index.get() == s.index.get() ? s.index.get() : -1;
             distance[v.index.get()-1] = v.index.get() == s.index.get() ? 0 : Integer.MAX_VALUE;
