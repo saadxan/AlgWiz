@@ -2,6 +2,7 @@ package com.algwiz;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -16,10 +17,10 @@ public class Edge extends Pane {
     private final Polygon arrowHead;
 
     public Edge(Vertex originVertex) {
+        origin = originVertex;
+
         setPickOnBounds(false);
         setUpEdgeLine();
-
-        origin = originVertex;
 
         line.startXProperty().bind(origin.centerXProperty());
         line.startYProperty().bind(origin.centerYProperty());
@@ -52,12 +53,17 @@ public class Edge extends Pane {
         weightField.setMaxWidth(45);
         weightField.setMaxHeight(15);
         weightField.setAlignment(Pos.CENTER);
+
+        ToggleButton addEdgeButtonRef = (ToggleButton) origin.getScene().lookup("#addEdgeButton");
+        weightField.editableProperty().bind(addEdgeButtonRef.selectedProperty());
+        weightField.disableProperty().bind(addEdgeButtonRef.selectedProperty().not());
         weightField.textProperty().addListener((observableValue, s, t1) -> {
             if (!t1.matches("\\d*"))
                 weightField.setText(t1.replaceAll("[^\\d]", ""));
             else if (!weightField.getText().isBlank())
                 weight = Integer.parseInt(weightField.getText());
         });
+
         weightField.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
                 if (weightField.getText().isBlank())

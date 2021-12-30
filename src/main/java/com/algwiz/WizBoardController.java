@@ -40,6 +40,9 @@ public class WizBoardController implements Initializable {
     ToggleButton addEdgeButton;
 
     @FXML
+    ToggleButton removeEdgeButton;
+
+    @FXML
     AdjacencyMatrix matrix;
 
     @FXML
@@ -74,6 +77,13 @@ public class WizBoardController implements Initializable {
         return null;
     }
 
+    public Edge getTargetEdge(EventTarget target) {
+        Node targetParent = ((Node) target).getParent();
+        if ((targetParent instanceof Edge))
+            return (Edge) targetParent;
+        return null;
+    }
+
     public void addVertex() {
         removeAllHandlers();
         board.addEventHandler(MouseEvent.MOUSE_CLICKED, addVertexHandler);
@@ -103,26 +113,32 @@ public class WizBoardController implements Initializable {
             if (v == null)
                 return;
 
-            for (Edge neighbor : vertices.get(v)) {
-                board.getChildren().remove(neighbor);
-                inverseEdges.get(neighbor.destination).remove(neighbor);
+            for (Edge edge : vertices.get(v)) {
+                board.getChildren().remove(edge);
             }
 
-            Map<Vertex, ObservableSet<Edge>> swapTo = FXCollections.observableHashMap();
+            inverseEdges.replaceAll((key, val) -> {
+//                vertices.get(tempEdge.origin).remove(tempEdge);
+//                board.getChildren().remove(tempEdge);
+                val.removeIf(tempEdge -> tempEdge.destination == v);
+                return val;
+            });
 
-            for (Edge inverseNeighbor : inverseEdges.get(v)) {
-                board.getChildren().remove(inverseNeighbor);
-                ObservableSet<Edge> tempInverseEdgesSet = vertices.get(inverseNeighbor.origin);
-                tempInverseEdgesSet.remove(inverseNeighbor);
-                swapTo.put(inverseNeighbor.origin, tempInverseEdgesSet);
-            }
+            vertices.replaceAll((key, val) -> {
+                val.removeIf(edge -> edge.destination == v);
+                return val;
+            });
 
-            for (Map.Entry<Vertex, ObservableSet<Edge>> entry : swapTo.entrySet()) {
-                vertices.remove(entry.getKey());
-                vertices.put(entry.getKey(), entry.getValue());
-            }
+            board.getChildren().removeIf(node -> {
+                if (node instanceof Edge) {
+                    return ((Edge) node).destination == v;
+                }
+                return false;
+            });
 
             vertices.remove(v);
+            inverseEdges.remove(v);
+
             board.getChildren().remove(v);
             matrix.refresh();
         }
@@ -182,6 +198,39 @@ public class WizBoardController implements Initializable {
 
             tempActionNode = -1;
             mouseEvent.consume();
+        }
+    };
+
+    public void removeEdge() {
+        removeAllHandlers();
+        board.addEventHandler(MouseEvent.MOUSE_CLICKED, removeEdgeHandler);
+    }
+
+    EventHandler<MouseEvent> removeEdgeHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent mouseEvent) {
+            Edge e = getTargetEdge(mouseEvent.getTarget());
+            if (e == null)
+                return;
+
+//            Map<Vertex, ObservableSet<Edge>> swapTo = FXCollections.observableHashMap();
+//
+//            for (Edge inverseNeighbor : inverseEdges.get(e.destination)) {
+//                ObservableSet<Edge> tempInverseEdgesSet = vertices.get(inverseNeighbor.origin);
+//                tempInverseEdgesSet.remove(inverseNeighbor);
+//                swapTo.put(inverseNeighbor.origin, tempInverseEdgesSet);
+//            }
+//
+//            for (Map.Entry<Vertex, ObservableSet<Edge>> entry : swapTo.entrySet()) {
+//                vertices.remove(entry.getKey());
+//                vertices.put(entry.getKey(), entry.getValue());
+//            }
+
+            vertices.get(e.origin).remove(e);
+            inverseEdges.get(e.destination).remove(e);
+            System.out.println(inverseEdges);
+            board.getChildren().remove(e);
+            matrix.refresh();
         }
     };
 
@@ -260,8 +309,8 @@ public class WizBoardController implements Initializable {
         verticesMapListener = change -> {
             if (change.wasAdded())
                 mapList.add(new VertexEntry(change.getKey(), change.getValueAdded()));
-            else if (change.wasRemoved())
-                mapList.remove(new VertexEntry(change.getKey(), change.getValueAdded()));
+            if (change.wasRemoved())
+                mapList.remove(new VertexEntry(change.getKey(), change.getValueRemoved()));
         };
 
         vertices.addListener(verticesMapListener);

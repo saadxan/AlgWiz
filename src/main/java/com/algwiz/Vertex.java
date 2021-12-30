@@ -101,6 +101,14 @@ public class Vertex extends StackPane implements Comparable<Vertex> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vertex vertex = (Vertex) o;
+        return Objects.equals(index, vertex.index);
+    }
+
+    @Override
     public String toString() {
         return String.format("(%d)", index.get());
     }
