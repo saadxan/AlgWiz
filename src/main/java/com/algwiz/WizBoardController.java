@@ -17,8 +17,6 @@ import java.util.*;
 
 public class WizBoardController implements Initializable {
 
-    @FXML
-    ToggleGroup modify;
     int tempActionNode = -1;
 
     ObservableMap<Vertex, ObservableSet<Edge>> vertices = FXCollections.observableHashMap();
@@ -28,6 +26,9 @@ public class WizBoardController implements Initializable {
 
     @FXML
     Pane board;
+
+    @FXML
+    ToggleGroup modify;
 
     @FXML
     ToggleButton addVertexButton;
@@ -49,7 +50,6 @@ public class WizBoardController implements Initializable {
 
     @FXML
     Label dialogLabel;
-
 
 
     public int lowestMissingIndex() {

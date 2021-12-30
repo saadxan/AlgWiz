@@ -9,6 +9,20 @@ import javafx.scene.text.Text;
 
 import java.util.*;
 
+/**
+ * WizBoard has x-width of xw, y-height of yh
+ * It is positioned at ps as default
+ * Vertex has a radius r
+ * (ps + r, ps + r)
+ * Use dimensions above for left & top corner Vertex translations
+ * (xw - (ps + r), yh - (ps + r))
+ * Use dimensions above for right & bottom corner Vertex translations
+ *
+ * i.e. xw = 1024, yh = 576, ps = 10, r = 10
+ * (20, 20) for left & top ; net +20
+ * (1004, 556) for right & bottom ; net -20
+ */
+
 public class Vertex extends StackPane implements Comparable<Vertex> {
 
     double x;
@@ -30,12 +44,12 @@ public class Vertex extends StackPane implements Comparable<Vertex> {
 
         if (circle.getCenterX() < 20)
             circle.setCenterX(20);
-        else if (circle.getCenterX() > 1130)
-            circle.setCenterX(1130);
+        else if (circle.getCenterX() > 1004)
+            circle.setCenterX(1004);
         if (circle.getCenterY() < 20)
             circle.setCenterY(20);
-        else if (circle.getCenterY() > 650)
-            circle.setCenterY(650);
+        else if (circle.getCenterY() > 556)
+            circle.setCenterY(556);
 
         layoutXProperty().bind(circle.centerXProperty().subtract(circle.radiusProperty()));
         layoutYProperty().bind(circle.centerYProperty().subtract(circle.radiusProperty()));
