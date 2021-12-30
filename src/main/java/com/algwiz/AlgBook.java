@@ -130,7 +130,6 @@ public final class AlgBook {
         distance = new int[max];
         seqAnimation = new SequentialTransition();
 
-        System.out.println(vertices.keySet() + " with size " + vertices.size());
         for (Vertex v : vertices.keySet()) {
             previous[v.index.get()-1] = v.index.get() == s.index.get() ? s.index.get() : -1;
             distance[v.index.get()-1] = v.index.get() == s.index.get() ? 0 : Integer.MAX_VALUE;
