@@ -13,15 +13,15 @@ import java.util.*;
  * WizBoard has x-width of xw, y-height of yh
  * It is positioned at ps as default
  * Vertex has a radius r
- * (ps + r, ps + r)
  *
+ * (ps + r, ps + r)
  * Use dimensions above for left & top corner Vertex translations
  * (xw - (ps + r), yh - (ps + r))
  * Use dimensions above for right & bottom corner Vertex translations
  *
  * i.e. xw = 1024, yh = 576, ps = 10, r = 10
- * (20, 20) for left & top ; net +20
- * (1004, 556) for right & bottom ; net -20
+ * Positioning of (20, 20) for left & top corners ; net +20
+ * Positioning of (1004, 556) for right & bottom corners ; net -20
  */
 
 public class Vertex extends StackPane implements Comparable<Vertex> {
@@ -59,8 +59,8 @@ public class Vertex extends StackPane implements Comparable<Vertex> {
         y = circle.getCenterY();
 
         Text indexText = new Text(String.valueOf(index.get()));
-        this.getChildren().addAll(circle, indexText);
-        this.setAlignment(Pos.CENTER);
+        getChildren().addAll(circle, indexText);
+        setAlignment(Pos.CENTER);
     }
 
     public DoubleProperty centerXProperty() {

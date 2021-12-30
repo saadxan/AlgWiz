@@ -11,7 +11,7 @@ public class AdjacencyMatrix extends TableView<VertexEntry> {
         setEditable(false);
         setFocusTraversable(false);
         setPlaceholder(new Label("No Vertices & Edges Detected"));
-        setTooltip(new Tooltip("Shows list of all vertices and describes a set of all of their neighboring vertices."));
+        setTooltip(new Tooltip("Shows list of all vertices and describes a set of all of their neighboring vertices"));
         setUpMatrix();
     }
 
