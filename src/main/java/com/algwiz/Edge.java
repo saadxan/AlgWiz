@@ -31,7 +31,7 @@ public class Edge extends Pane {
         arrowHead.getPoints().addAll(0.0, 0.0,
                 0.0, 25.0,
                 40.0, 12.5);
-        arrowHead.setStyle("-fx-fill: tomato; -fx-opacity: 100.0; -fx-stroke: black; -fx-stroke-width: 1px;");
+        arrowHead.getStyleClass().add("edge-arrow-head");
 
         arrowHead.layoutXProperty().bind(((origin.centerXProperty().add(line.endXProperty())).divide(2)).subtract(20));
         arrowHead.layoutYProperty().bind(((origin.centerYProperty().add(line.endYProperty())).divide(2)).subtract(12.5));
@@ -44,15 +44,12 @@ public class Edge extends Pane {
 
     public void setUpEdgeLine() {
         line = new Line();
-        line.setStyle("-fx-stroke: darkgray; -fx-stroke-width: 1px; -fx-stroke-type: centered; -fx-stroke-line-join: miter; -fx-stroke-dash-offset: 0.0;");
+        line.getStyleClass().add("edge-line");
 
         weightField = new TextField();
-        weightField.setStyle("-fx-background-color: rgba(0,0,0,0); -fx-text-fill: white;");
+        weightField.getStyleClass().add("edge-weight-field");
         weightField.setPickOnBounds(true);
         weightField.setFocusTraversable(true);
-        weightField.setMaxWidth(45);
-        weightField.setMaxHeight(15);
-        weightField.setAlignment(Pos.CENTER);
 
         ToggleButton addEdgeButtonRef = (ToggleButton) origin.getScene().lookup("#addEdgeButton");
         weightField.editableProperty().bind(addEdgeButtonRef.selectedProperty());

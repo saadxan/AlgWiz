@@ -17,9 +17,7 @@ public class AdjacencyMatrix extends TableView<VertexEntry> {
 
     public void setUpMatrix() {
         TableColumn<VertexEntry, String> key = new TableColumn<>("(V)");
-        key.setStyle("-fx-alignment: CENTER;");
-        key.setMinWidth(50);
-        key.setMaxWidth(50);
+        key.getStyleClass().add("matrix-column-one");
 
         key.setCellValueFactory(item -> new SimpleObjectProperty<>(item.getValue().getKey().toString()));
 

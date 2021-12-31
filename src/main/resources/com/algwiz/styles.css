@@ -1,0 +1,39 @@
+.vertex {
+    -fx-fill: yellowgreen;
+    -fx-stroke: black;
+    -fx-stroke-type: inside;
+    -fx-stroke-width: 1px;
+}
+
+.edge-arrow-head {
+    -fx-fill: tomato;
+    -fx-opacity: 100.0;
+    -fx-stroke: black;
+    -fx-stroke-width: 1px;
+}
+
+.edge-line {
+    -fx-stroke-dash-offset: 0.0;
+    -fx-stroke-line-join: miter;
+    -fx-stroke: darkgray;
+    -fx-stroke-type: centered;
+    -fx-stroke-width: 1px;
+}
+
+.edge-weight-field {
+    -fx-alignment: center;
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-text-fill: white;
+    -fx-max-height: 15;
+    -fx-max-width: 45;
+}
+
+.edge-weight-field:disabled{
+    -fx-opacity: 1.0;
+}
+
+.matrix-column-one {
+    -fx-alignment: center;
+    -fx-max-width: 50;
+    -fx-min-width: 50;
+}

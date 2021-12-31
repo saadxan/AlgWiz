@@ -36,7 +36,7 @@ public class Vertex extends StackPane implements Comparable<Vertex> {
 
         circle = new Circle();
 
-        circle.setStyle("-fx-fill: yellowgreen; -fx-stroke: black; -fx-stroke-type: inside; -fx-stroke-width: 1px;");
+        circle.getStyleClass().add("vertex");
         circle.setRadius(20.0);
         circle.setCenterX(coordinates[0]);
         circle.setCenterY(coordinates[1]);
