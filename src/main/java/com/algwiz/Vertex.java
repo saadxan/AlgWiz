@@ -30,11 +30,9 @@ public class Vertex extends StackPane implements Comparable<Vertex> {
     double y;
     SimpleIntegerProperty index;
     private final Circle circle;
-    private final Set<Integer> incomingEdges;
 
     public Vertex(double[] coordinates, int indexValue) {
         index = new SimpleIntegerProperty(indexValue);
-        incomingEdges = new HashSet<>();
 
         circle = new Circle();
 
@@ -85,10 +83,6 @@ public class Vertex extends StackPane implements Comparable<Vertex> {
 
     public void setIndex(int index) {
         this.index.set(index);
-    }
-
-    public void removeIncomingEdge(Edge e) {
-        incomingEdges.remove(e.destination.index.get());
     }
 
     public Circle getCircle() {

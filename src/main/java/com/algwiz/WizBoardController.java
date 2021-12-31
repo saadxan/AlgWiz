@@ -73,6 +73,7 @@ public class WizBoardController implements Initializable {
         Parent targetParent = ((Node) target).getParent();
         if ((targetParent instanceof Vertex))
             return (Vertex) targetParent;
+
         return null;
     }
 
@@ -80,6 +81,7 @@ public class WizBoardController implements Initializable {
         Node targetParent = ((Node) target).getParent();
         if ((targetParent instanceof Edge))
             return (Edge) targetParent;
+
         return null;
     }
 
