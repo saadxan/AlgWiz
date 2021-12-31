@@ -20,7 +20,6 @@ public class WizBoardController implements Initializable {
     int tempActionNode = -1;
 
     ObservableMap<Vertex, ObservableSet<Edge>> vertices = FXCollections.observableHashMap();
-    ObservableMap<Vertex, ObservableSet<Edge>> inverseEdges = FXCollections.observableHashMap();
     ObservableList<VertexEntry> mapList = FXCollections.observableArrayList();
     MapChangeListener<Vertex, ObservableSet<Edge>> verticesMapListener;
 
@@ -95,7 +94,6 @@ public class WizBoardController implements Initializable {
             double[] coordinates = {mouseEvent.getX(), mouseEvent.getY()};
             Vertex v = new Vertex(coordinates, lowestMissingIndex());
             vertices.put(v, FXCollections.observableSet());
-            inverseEdges.put(v, FXCollections.observableSet());
             board.getChildren().add(v);
             matrix.refresh();
         }
@@ -113,30 +111,19 @@ public class WizBoardController implements Initializable {
             if (v == null)
                 return;
 
-            for (Edge edge : vertices.get(v)) {
-                board.getChildren().remove(edge);
-            }
-
-            inverseEdges.replaceAll((key, val) -> {
-                val.removeIf(tempEdge -> tempEdge.destination == v);
-                return val;
-            });
-
             vertices.replaceAll((key, val) -> {
-                val.removeIf(edge -> edge.destination == v);
+                val.removeIf(edge -> edge.destination == v || edge.origin == v);
                 return val;
             });
 
             board.getChildren().removeIf(node -> {
                 if (node instanceof Edge)
-                    return ((Edge) node).destination == v;
+                    return ((Edge) node).destination == v || ((Edge) node).origin == v;
 
                 return false;
             });
 
             vertices.remove(v);
-            inverseEdges.remove(v);
-
             board.getChildren().remove(v);
             matrix.refresh();
         }
@@ -188,7 +175,6 @@ public class WizBoardController implements Initializable {
 
                 if (e.origin != e.destination) {
                     vertices.get(e.origin).add(e);
-                    inverseEdges.get(e.destination).add(e);
                     matrix.refresh();
                 } else
                     board.getChildren().remove(e);
@@ -212,7 +198,6 @@ public class WizBoardController implements Initializable {
                 return;
 
             vertices.get(e.origin).remove(e);
-            inverseEdges.get(e.destination).remove(e);
             board.getChildren().remove(e);
             matrix.refresh();
         }
