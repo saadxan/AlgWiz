@@ -50,7 +50,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="assets/sample-demo.png" alt="sample-demo" width="640" height="360">
+<img src="assets/sample-demo.png" alt="sample-demo" width="640" height="300">
 
 A versatile GUI application that allows users to construct custom weighted directed graphs and observe various visualized algorithms. 
 
