@@ -179,7 +179,7 @@ public final class AlgBook {
 
     private static ParallelTransition edgeStroke(Edge e) {
         StrokeTransition lineStroke =  new StrokeTransition(Duration.millis(1000), e.getLine(), Color.DARKGRAY, Color.BLACK);
-        FillTransition arrowFill =  new FillTransition(Duration.millis(1000), e.getArrowHead(), Color.TOMATO, Color.CRIMSON);
+        FillTransition arrowFill =  new FillTransition(Duration.millis(1000), e.getArrowHead(), Color.LIGHTSALMON, Color.CRIMSON);
         return new ParallelTransition(lineStroke, arrowFill);
     }
 
@@ -189,7 +189,7 @@ public final class AlgBook {
 
     private static ParallelTransition edgeUnStroke(Edge e) {
         StrokeTransition lineStroke =  new StrokeTransition(Duration.millis(1000), e.getLine(), Color.DARKGRAY, Color.LIGHTGRAY);
-        FillTransition arrowFill =  new FillTransition(Duration.millis(1000), e.getArrowHead(), Color.TOMATO, Color.LIGHTGRAY);
+        FillTransition arrowFill =  new FillTransition(Duration.millis(1000), e.getArrowHead(), Color.LIGHTSALMON, Color.LIGHTGRAY);
         return new ParallelTransition(lineStroke, arrowFill);
     }
 

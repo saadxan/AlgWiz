@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
@@ -25,6 +26,9 @@ public class WizBoardController implements Initializable {
 
     @FXML
     Pane board;
+
+    @FXML
+    FlowPane sidePanel;
 
     @FXML
     ToggleGroup modify;
@@ -49,9 +53,6 @@ public class WizBoardController implements Initializable {
 
     @FXML
     Button executeButton;
-
-    @FXML
-    Label dialogLabel;
 
 
     public int lowestMissingIndex() {
@@ -223,22 +224,18 @@ public class WizBoardController implements Initializable {
 
             switch (choice) {
                 case 0:
-                    dialogLabel.setText(String.format("%s | Source Vertex: %s\n", algorithmBox.getValue(), v));
                     AlgBook.BFS(vertices, v);
                     break;
                 case 1:
-                    dialogLabel.setText(String.format("%s | Source Vertex: %s\n", algorithmBox.getValue(), v));
                     AlgBook.DFS(vertices, v);
                     break;
                 case 2:
-                    dialogLabel.setText(String.format("%s | Source Vertex: %s | Destination Vertex: %s\n", algorithmBox.getValue(), v, v2));
                     AlgBook.dijkstra(vertices, v, v2);
                     break;
             }
 
             v = null;
             v2 = null;
-            dialogLabel.setText("");
             
             board.removeEventHandler(MouseEvent.MOUSE_CLICKED, selectVertexHandler);
             mouseEvent.consume();
