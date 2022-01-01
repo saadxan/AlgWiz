@@ -222,18 +222,18 @@ public class WizBoardController implements Initializable {
                 return;
 
             switch (choice) {
-                case 0 -> {
+                case 0:
                     dialogLabel.setText(String.format("%s | Source Vertex: %s\n", algorithmBox.getValue(), v));
                     AlgBook.BFS(vertices, v);
-                }
-                case 1 -> {
+                    break;
+                case 1:
                     dialogLabel.setText(String.format("%s | Source Vertex: %s\n", algorithmBox.getValue(), v));
                     AlgBook.DFS(vertices, v);
-                }
-                case 2 -> {
+                    break;
+                case 2:
                     dialogLabel.setText(String.format("%s | Source Vertex: %s | Destination Vertex: %s\n", algorithmBox.getValue(), v, v2));
                     AlgBook.dijkstra(vertices, v, v2);
-                }
+                    break;
             }
 
             v = null;
