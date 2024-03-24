@@ -13,3 +13,4 @@ buildNumber.properties
 #System & Environment
 .DS_Store
 .idea/
+.iml
